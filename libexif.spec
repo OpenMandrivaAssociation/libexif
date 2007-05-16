@@ -1,28 +1,18 @@
-##### GENERAL STUFF #####
-
 %define libname %mklibname exif 12
+%define langname libexif-12
 
 Summary:	Library to access EXIF files (extended JPEG files)
 Name:		libexif
-Version:	0.6.13
-Release:	%mkrel 4
+Version:	0.6.14
+Release:	%mkrel 1
 License:	LGPL
 Group:		Graphics
 Url:		http://sourceforge.net/projects/libexif/
-
-##### SOURCE FILES #####
-
-Source: http://belnet.dl.sourceforge.net/sourceforge/libexif/libexif-%{version}.tar.bz2
-Patch0: libexif-0.6.13-pkgconfig-fix.patch
-
-##### ADDITIONAL DEFINITIONS #####
-
+Source:		http://belnet.dl.sourceforge.net/sourceforge/libexif/libexif-%{version}.tar.bz2
+Patch0:		libexif-0.6.13-pkgconfig-fix.patch
 Provides:	libexif
-BuildRoot: %{_tmppath}/%{name}-buildroot
-
+BuildRoot:	%{_tmppath}/%{name}-buildroot
 BuildRequires:	doxygen
-
-##### SUB-PACKAGES #####
 
 %description
 
@@ -55,7 +45,6 @@ the "%{libname}" library.
 ##### PREP #####
 
 %prep
-rm -rf $RPM_BUILD_DIR/libexif-%{version}
 %setup -q -n libexif-%{version}
 %patch0 -p1 -b .includedir
 
@@ -78,37 +67,25 @@ autoconf-2.5x
 ##### INSTALL #####
 
 %install
-rm -rf $RPM_BUILD_ROOT
-
+rm -rf %buildroot
 %makeinstall
-
-%find_lang %{name}
+%find_lang %{langname}
 
 ##### PRE/POST INSTALL SCRIPTS #####
 
-%post -n %{libname} 
-
-/sbin/ldconfig
-
-%postun -n %{libname} 
-
-/sbin/ldconfig
+%post -n %{libname} -p /sbin/ldconfig
+%postun -n %{libname} -p /sbin/ldconfig
 
 %clean
-rm -rf $RPM_BUILD_ROOT
-
+rm -rf %buildroot
 
 ##### FILE LISTS FOR ALL BINARY PACKAGES #####
 
 ##### libexif
-%files -n %libname -f %{name}.lang
+%files -n %libname -f %{langname}.lang
 %defattr(-,root,root)
 %doc ABOUT-NLS COPYING ChangeLog README
 %{_libdir}/*.so.*
-%lang(de) %{_datadir}/locale/de/LC_MESSAGES/*
-%lang(es) %{_datadir}/locale/es/LC_MESSAGES/*
-%lang(fr) %{_datadir}/locale/fr/LC_MESSAGES/*
-%lang(pl) %{_datadir}/locale/pl/LC_MESSAGES/*
 
 ##### libexif-devel
 %files -n %{libname}-devel
@@ -119,7 +96,3 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/pkgconfig/*
 %{_includedir}/*
 %{_docdir}/libexif
-
-##### CHANGELOG #####
-
-
