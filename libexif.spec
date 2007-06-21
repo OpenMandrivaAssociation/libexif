@@ -3,7 +3,7 @@
 
 Summary:	Library to access EXIF files (extended JPEG files)
 Name:		libexif
-Version:	0.6.14
+Version:	0.6.16
 Release:	%mkrel 1
 License:	LGPL
 Group:		Graphics
@@ -46,7 +46,7 @@ the "%{libname}" library.
 
 %prep
 %setup -q -n libexif-%{version}
-%patch0 -p1 -b .includedir
+%patch0 -p2 -b .includedir
 
 # Fix broken libexif/exif-utils.c
 perl -p -i -e 's:^(\s*)static\s*(ExifSShort):$1$2:' libexif/exif-utils.c
@@ -59,7 +59,7 @@ perl -p -i -e 's:^(\s*)static\s*(ExifSShort):$1$2:' libexif/exif-utils.c
 
 # Fix broken "./configure" script
 #perl -p -i -e 's:^(AC_OUTPUT.*)$:$1 po/Makefile.in:' configure.in
-autoconf-2.5x
+autoconf
 
 %configure2_5x
 %make
