@@ -1,11 +1,16 @@
-%define libname %mklibname exif 12
-%define langname libexif-12
+%define name	libexif
+%define version	0.6.16
+%define release	%mkrel 2
+
+%define libname		%mklibname exif 12
+%define develname	%mklibname exif -d
+%define langname	libexif-12
 
 Summary:	Library to access EXIF files (extended JPEG files)
-Name:		libexif
-Version:	0.6.16
-Release:	%mkrel 1
-License:	LGPL
+Name:		%{name}
+Version:	%{version}
+Release:	%{release}
+License:	LGPLv2.1
 Group:		Graphics
 Url:		http://sourceforge.net/projects/libexif/
 Source:		http://belnet.dl.sourceforge.net/sourceforge/libexif/libexif-%{version}.tar.bz2
@@ -20,24 +25,25 @@ Most digital cameras produce EXIF files, which are JPEG files with
 extra tags that contain information about the image. The EXIF library
 allows you to parse an EXIF file and read the data from those tags.
 
-%package -n %libname
+%package -n %{libname}
 Summary:	Library to access EXIF files (extended JPEG files)
 Provides:	libexif
 Group:		Graphics
 
-%description -n %libname
+%description -n %{libname}
 
 Most digital cameras produce EXIF files, which are JPEG files with
 extra tags that contain information about the image. The EXIF library
 allows you to parse an EXIF file and read the data from those tags.
 
-%package -n %{libname}-devel
+%package -n %{develname}
 Summary: 	Headers and links to compile against the "%{libname}" library
 Requires: 	%{libname} = %{version}
-Provides:	libexif-devel
+Provides:	%{name}-devel = %{version}-%{release}
+Obsoletes:	%{mklibname exif 12 -d}
 Group:		Development/C
 
-%description -n %{libname}-devel
+%description -n %{develname}
 This package contains all files which one needs to compile programs using
 the "%{libname}" library.
 
@@ -45,7 +51,7 @@ the "%{libname}" library.
 ##### PREP #####
 
 %prep
-%setup -q -n libexif-%{version}
+%setup -q
 %patch0 -p2 -b .includedir
 
 # Fix broken libexif/exif-utils.c
@@ -54,11 +60,6 @@ perl -p -i -e 's:^(\s*)static\s*(ExifSShort):$1$2:' libexif/exif-utils.c
 ##### BUILD #####
 
 %build
-# "autogen" is needed because we have a CVS snapshot.
-#./autogen.sh
-
-# Fix broken "./configure" script
-#perl -p -i -e 's:^(AC_OUTPUT.*)$:$1 po/Makefile.in:' configure.in
 autoconf
 
 %configure2_5x
@@ -82,14 +83,14 @@ rm -rf %buildroot
 ##### FILE LISTS FOR ALL BINARY PACKAGES #####
 
 ##### libexif
-%files -n %libname -f %{langname}.lang
+%files -n %libname
 %defattr(-,root,root)
-%doc ABOUT-NLS COPYING ChangeLog README
 %{_libdir}/*.so.*
 
 ##### libexif-devel
-%files -n %{libname}-devel
+%files -n %{develname} -f %{langname}.lang
 %defattr(-,root,root)
+%doc ABOUT-NLS COPYING ChangeLog README
 %{_libdir}/*.so
 %{_libdir}/*.la
 %{_libdir}/*.a
