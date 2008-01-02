@@ -16,6 +16,7 @@ Url:		http://sourceforge.net/projects/libexif/
 Source:		http://belnet.dl.sourceforge.net/sourceforge/libexif/libexif-%{version}.tar.bz2
 Patch0:		libexif-0.6.13-pkgconfig-fix.patch
 Provides:	libexif
+BuildRoot:	%{_tmppath}/%{name}-buildroot
 BuildRequires:	doxygen
 
 %description
