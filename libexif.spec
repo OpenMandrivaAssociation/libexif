@@ -1,6 +1,6 @@
 %define name	libexif
 %define version	0.6.16
-%define release	%mkrel 2
+%define release	%mkrel 3
 
 %define libname		%mklibname exif 12
 %define develname	%mklibname exif -d
