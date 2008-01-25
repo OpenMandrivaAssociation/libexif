@@ -1,6 +1,6 @@
 %define name	libexif
 %define version	0.6.16
-%define release	%mkrel 3
+%define release	%mkrel 4
 
 %define libname		%mklibname exif 12
 %define develname	%mklibname exif -d
@@ -15,6 +15,8 @@ Group:		Graphics
 Url:		http://sourceforge.net/projects/libexif/
 Source:		http://belnet.dl.sourceforge.net/sourceforge/libexif/libexif-%{version}.tar.bz2
 Patch0:		libexif-0.6.13-pkgconfig-fix.patch
+Patch1:		CVE-2007-6351.patch
+Patch2:		CVE-2007-6352.patch
 Provides:	libexif
 BuildRoot:	%{_tmppath}/%{name}-buildroot
 BuildRequires:	doxygen
@@ -53,6 +55,8 @@ the "%{libname}" library.
 %prep
 %setup -q
 %patch0 -p2 -b .includedir
+%patch1 -p1
+%patch2 -p1
 
 # Fix broken libexif/exif-utils.c
 perl -p -i -e 's:^(\s*)static\s*(ExifSShort):$1$2:' libexif/exif-utils.c
