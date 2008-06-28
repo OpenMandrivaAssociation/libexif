@@ -1,15 +1,11 @@
-%define name	libexif
-%define version	0.6.16
-%define release	%mkrel 5
-
 %define libname		%mklibname exif 12
 %define develname	%mklibname exif -d
 %define langname	libexif-12
 
 Summary:	Library to access EXIF files (extended JPEG files)
-Name:		%{name}
-Version:	%{version}
-Release:	%{release}
+Name:		libexif
+Version:	0.6.16
+Release:	%mkrel 6
 License:	LGPLv2.1
 Group:		Graphics
 Url:		http://sourceforge.net/projects/libexif/
@@ -18,8 +14,10 @@ Patch0:		libexif-0.6.13-pkgconfig-fix.patch
 Patch1:		CVE-2007-6351.patch
 Patch2:		CVE-2007-6352.patch
 Provides:	libexif
-BuildRoot:	%{_tmppath}/%{name}-buildroot
 BuildRequires:	doxygen
+BuildRequires:	gettext-devel
+BuildRequires:	libtool
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 Most digital cameras produce EXIF files, which are JPEG files with
@@ -62,7 +60,8 @@ perl -p -i -e 's:^(\s*)static\s*(ExifSShort):$1$2:' libexif/exif-utils.c
 ##### BUILD #####
 
 %build
-autoconf
+#sh ./autogen.sh
+libtoolize --copy --force; aclocal -I auto-m4 -I m4m; autoconf; automake
 
 %configure2_5x
 %make
@@ -103,3 +102,4 @@ rm -rf %buildroot
 %{_libdir}/pkgconfig/*
 %{_includedir}/*
 %{_docdir}/libexif
+
