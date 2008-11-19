@@ -4,15 +4,13 @@
 
 Summary:	Library to access EXIF files (extended JPEG files)
 Name:		libexif
-Version:	0.6.16
-Release:	%mkrel 6
+Version:	0.6.17
+Release:	%mkrel 1
 License:	LGPLv2.1
 Group:		Graphics
 Url:		http://sourceforge.net/projects/libexif/
 Source:		http://belnet.dl.sourceforge.net/sourceforge/libexif/libexif-%{version}.tar.bz2
 Patch0:		libexif-0.6.13-pkgconfig-fix.patch
-Patch1:		CVE-2007-6351.patch
-Patch2:		CVE-2007-6352.patch
 Provides:	libexif
 BuildRequires:	doxygen
 BuildRequires:	gettext-devel
@@ -51,8 +49,6 @@ the "%{libname}" library.
 %prep
 %setup -q
 %patch0 -p2 -b .includedir
-%patch1 -p1
-%patch2 -p1
 
 # Fix broken libexif/exif-utils.c
 perl -p -i -e 's:^(\s*)static\s*(ExifSShort):$1$2:' libexif/exif-utils.c
