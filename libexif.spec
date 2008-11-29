@@ -5,7 +5,7 @@
 Summary:	Library to access EXIF files (extended JPEG files)
 Name:		libexif
 Version:	0.6.17
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	LGPLv2.1
 Group:		Graphics
 Url:		http://sourceforge.net/projects/libexif/
@@ -16,6 +16,7 @@ BuildRequires:	doxygen
 BuildRequires:	gettext-devel
 BuildRequires:	libtool
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
+Conflicts:	%{mklibname exif 12} < 0.6.17-2
 
 %description
 Most digital cameras produce EXIF files, which are JPEG files with
@@ -25,6 +26,7 @@ allows you to parse an EXIF file and read the data from those tags.
 %package -n %{libname}
 Summary:	Library to access EXIF files (extended JPEG files)
 Provides:	libexif
+Requires:	%{name} = %{version}-%{release}
 Group:		Graphics
 
 %description -n %{libname}
@@ -49,9 +51,6 @@ the "%{libname}" library.
 %prep
 %setup -q
 %patch0 -p2 -b .includedir
-
-# Fix broken libexif/exif-utils.c
-perl -p -i -e 's:^(\s*)static\s*(ExifSShort):$1$2:' libexif/exif-utils.c
 
 ##### BUILD #####
 
@@ -82,6 +81,8 @@ rm -rf %buildroot
 rm -rf %buildroot
 
 ##### FILE LISTS FOR ALL BINARY PACKAGES #####
+%files -f %{langname}.lang
+%doc AUTHORS README
 
 ##### libexif
 %files -n %libname
@@ -91,7 +92,7 @@ rm -rf %buildroot
 ##### libexif-devel
 %files -n %{develname} -f %{langname}.lang
 %defattr(-,root,root)
-%doc ABOUT-NLS COPYING ChangeLog README
+%doc ABOUT-NLS ChangeLog
 %{_libdir}/*.so
 %{_libdir}/*.la
 %{_libdir}/*.a
