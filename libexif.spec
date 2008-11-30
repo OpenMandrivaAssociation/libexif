@@ -1,12 +1,13 @@
-%define libname		%mklibname exif 12
+%define	major		12
+%define libname		%mklibname exif %{major}
 %define develname	%mklibname exif -d
-%define langname	libexif-12
+%define langname	libexif-%{major}
 
 Summary:	Library to access EXIF files (extended JPEG files)
 Name:		libexif
 Version:	0.6.17
-Release:	%mkrel 2
-License:	LGPLv2.1
+Release:	%mkrel 3
+License:	LGPLv2+
 Group:		Graphics
 Url:		http://sourceforge.net/projects/libexif/
 Source:		http://belnet.dl.sourceforge.net/sourceforge/libexif/libexif-%{version}.tar.bz2
@@ -16,17 +17,26 @@ BuildRequires:	doxygen
 BuildRequires:	gettext-devel
 BuildRequires:	libtool
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
-Conflicts:	%{mklibname exif 12} < 0.6.17-2
 
 %description
 Most digital cameras produce EXIF files, which are JPEG files with
 extra tags that contain information about the image. The EXIF library
 allows you to parse an EXIF file and read the data from those tags.
 
+%package -n %{name}%{major}-common
+Summary:        Library to access EXIF files - Translations
+Group:		Graphics
+Conflicts:      %{mklibname -d exif 12} < 0.6.17-3
+Conflicts:	libexif < 0.6.17-3
+Obsoletes:	libexif < 0.6.17-3
+
+%description -n %{name}%{major}-common
+This package contains the translations for %{name}%{major}.
+
 %package -n %{libname}
 Summary:	Library to access EXIF files (extended JPEG files)
 Provides:	libexif
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name}%{major}-common = %{version}-%{release}
 Group:		Graphics
 
 %description -n %{libname}
@@ -36,9 +46,10 @@ allows you to parse an EXIF file and read the data from those tags.
 
 %package -n %{develname}
 Summary: 	Headers and links to compile against the "%{libname}" library
-Requires: 	%{libname} = %{version}
+Requires: 	%{libname} = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
 Obsoletes:	%{mklibname exif 12 -d}
+Provides:	%{mklibname exif 12 -d}
 Group:		Development/C
 
 %description -n %{develname}
@@ -46,13 +57,9 @@ This package contains all files which one needs to compile programs using
 the "%{libname}" library.
 
 
-##### PREP #####
-
 %prep
 %setup -q
 %patch0 -p2 -b .includedir
-
-##### BUILD #####
 
 %build
 #sh ./autogen.sh
@@ -61,14 +68,11 @@ libtoolize --copy --force; aclocal -I auto-m4 -I m4m; autoconf; automake
 %configure2_5x
 %make
 
-##### INSTALL #####
-
 %install
 rm -rf %buildroot
 %makeinstall
 %find_lang %{langname}
 
-##### PRE/POST INSTALL SCRIPTS #####
 
 %if %mdkversion < 200900
 %post -n %{libname} -p /sbin/ldconfig
@@ -80,19 +84,14 @@ rm -rf %buildroot
 %clean
 rm -rf %buildroot
 
-##### FILE LISTS FOR ALL BINARY PACKAGES #####
-%files -f %{langname}.lang
-%doc AUTHORS README
+%files -n %{name}%{major}-common -f %{langname}.lang
 
-##### libexif
-%files -n %libname
+%files -n %{libname} 
 %defattr(-,root,root)
-%{_libdir}/*.so.*
+%{_libdir}/*.so.%{major}*
 
-##### libexif-devel
-%files -n %{develname} -f %{langname}.lang
+%files -n %{develname} 
 %defattr(-,root,root)
-%doc ABOUT-NLS ChangeLog
 %{_libdir}/*.so
 %{_libdir}/*.la
 %{_libdir}/*.a
