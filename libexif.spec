@@ -12,7 +12,6 @@ Group:		Graphics
 Url:		http://sourceforge.net/projects/libexif/
 Source:		http://belnet.dl.sourceforge.net/sourceforge/libexif/libexif-%{version}.tar.bz2
 Patch0:		libexif-0.6.13-pkgconfig-fix.patch
-Provides:	libexif
 BuildRequires:	doxygen
 BuildRequires:	gettext-devel
 BuildRequires:	libtool
@@ -35,7 +34,7 @@ This package contains the translations for %{name}%{major}.
 
 %package -n %{libname}
 Summary:	Library to access EXIF files (extended JPEG files)
-Provides:	libexif
+Provides:	libexif = %{version}-%{release}
 Requires:	%{name}%{major}-common = %{version}-%{release}
 Group:		Graphics
 
@@ -49,7 +48,7 @@ Summary: 	Headers and links to compile against the "%{libname}" library
 Requires: 	%{libname} = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
 Obsoletes:	%{mklibname exif 12 -d}
-Provides:	%{mklibname exif 12 -d}
+Provides:	%{mklibname exif 12 -d} = %{version}-%{release}
 Group:		Development/C
 
 %description -n %{develname}
