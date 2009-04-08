@@ -6,7 +6,7 @@
 Summary:	Library to access EXIF files (extended JPEG files)
 Name:		libexif
 Version:	0.6.17
-Release:	%mkrel 3
+Release:	%mkrel 4
 License:	LGPLv2+
 Group:		Graphics
 Url:		http://sourceforge.net/projects/libexif/
@@ -26,6 +26,7 @@ allows you to parse an EXIF file and read the data from those tags.
 Summary:        Library to access EXIF files - Translations
 Group:		Graphics
 Conflicts:      %{mklibname -d exif 12} < 0.6.17-3
+Conflicts:      %{mklibname -d exif} < 0.6.17-3
 Conflicts:	libexif < 0.6.17-3
 Obsoletes:	libexif < 0.6.17-3
 
