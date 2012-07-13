@@ -5,8 +5,8 @@
 
 Summary:	Library to access EXIF files (extended JPEG files)
 Name:		libexif
-Version:	0.6.20
-Release:	%mkrel 2
+Version:	0.6.21
+Release:	1
 License:	LGPLv2+
 Group:		Graphics
 Url:		http://sourceforge.net/projects/libexif/
@@ -14,8 +14,7 @@ Source:		http://downloads.sourceforge.net/project/%{name}/%{name}/%{version}/%{n
 Patch0:		libexif-0.6.13-pkgconfig-fix.patch
 BuildRequires:	doxygen
 BuildRequires:	gettext-devel
-BuildRequires:	libtool
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
+BuildRequires:	autoconf automake libtool
 
 %description
 Most digital cameras produce EXIF files, which are JPEG files with
@@ -69,33 +68,20 @@ libtoolize --copy --force; aclocal -I auto-m4 -I m4m; autoconf; automake
 %make
 
 %install
-rm -rf %buildroot
+
 %makeinstall
+
 %find_lang %{langname}
 
-
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
-
-%clean
-rm -rf %buildroot
+rm -f %{buildroot}%{_libdir}/*.*a
 
 %files -n %{name}%{major}-common -f %{langname}.lang
 
 %files -n %{libname} 
-%defattr(-,root,root)
 %{_libdir}/*.so.%{major}*
 
 %files -n %{develname} 
-%defattr(-,root,root)
 %{_libdir}/*.so
-%{_libdir}/*.la
-%{_libdir}/*.a
 %{_libdir}/pkgconfig/*
 %{_includedir}/*
 %{_docdir}/libexif
-
