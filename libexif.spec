@@ -1,6 +1,6 @@
-%define major	12
-%define libname	%mklibname exif %{major}
-%define devname	%mklibname exif -d
+%define major 12
+%define libname %mklibname exif %{major}
+%define devname %mklibname exif -d
 %define langname libexif-%{major}
 
 Summary:	Library to access EXIF files (extended JPEG files)
@@ -21,31 +21,31 @@ Most digital cameras produce EXIF files, which are JPEG files with
 extra tags that contain information about the image. The EXIF library
 allows you to parse an EXIF file and read the data from those tags.
 
-%package -n	%{name}%{major}-common
+%package -n %{name}%{major}-common
 Summary:	Library to access EXIF files - Translations
 Group:		Graphics
 
-%description -n	%{name}%{major}-common
+%description -n %{name}%{major}-common
 This package contains the translations for %{name}%{major}.
 
-%package -n	%{libname}
+%package -n %{libname}
 Summary:	Library to access EXIF files (extended JPEG files)
 Group:		System/Libraries
 Provides:	libexif = %{version}-%{release}
 Requires:	%{name}%{major}-common = %{version}-%{release}
 
-%description -n	%{libname}
+%description -n %{libname}
 Most digital cameras produce EXIF files, which are JPEG files with
 extra tags that contain information about the image. The EXIF library
 allows you to parse an EXIF file and read the data from those tags.
 
-%package -n	%{devname}
+%package -n %{devname}
 Summary:	Headers and links to compile against the "%{libname}" library
 Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
 
-%description -n	%{devname}
+%description -n %{devname}
 This package contains all files which one needs to compile programs using
 the "%{libname}" library.
 
@@ -73,4 +73,3 @@ autoreconf -fi -Iauto-m4 -Im4m
 %{_libdir}/pkgconfig/*
 %{_includedir}/*
 %{_docdir}/libexif
-
