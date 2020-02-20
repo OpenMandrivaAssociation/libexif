@@ -6,7 +6,7 @@
 Summary:	Library to access EXIF files (extended JPEG files)
 Name:		libexif
 Version:	0.6.21
-Release:	20
+Release:	21
 License:	LGPLv2+
 Group:		Graphics
 Url:		http://sourceforge.net/projects/libexif/
@@ -56,10 +56,10 @@ autoreconf -fi -Iauto-m4 -Im4m
 
 %build
 %configure --disable-static
-%make
+%make_build
 
 %install
-%makeinstall
+%make_install
 
 %find_lang %{langname}
 
