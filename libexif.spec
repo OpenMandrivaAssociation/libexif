@@ -1,13 +1,20 @@
+# libgphoto uses libexif, wine uses libgphoto
+%ifarch %{x86_64}
+%bcond_without compat32
+%endif
+
 %define major 12
 %define libname %mklibname exif %{major}
 %define devname %mklibname exif -d
+%define lib32name %mklib32name exif %{major}
+%define dev32name %mklib32name exif -d
 %define langname libexif-%{major}
 %define oversion  0_6_22
 
 Summary:	Library to access EXIF files (extended JPEG files)
 Name:		libexif
 Version:	0.6.22
-Release:	1
+Release:	2
 License:	LGPLv2+
 Group:		Graphics
 Url:		http://sourceforge.net/projects/libexif/
@@ -16,6 +23,10 @@ Patch0:		libexif-0.6.13-pkgconfig-fix.patch
 BuildRequires:	doxygen
 BuildRequires:	libtool
 BuildRequires:	gettext-devel
+%if %{with compat32}
+BuildRequires:	devel(libltdl)
+BuildRequires:	devel(libintl)
+%endif
 
 %description
 Most digital cameras produce EXIF files, which are JPEG files with
@@ -50,17 +61,56 @@ Provides:	%{name}-devel = %{version}-%{release}
 This package contains all files which one needs to compile programs using
 the "%{libname}" library.
 
+%if %{with compat32}
+%package -n %{lib32name}
+Summary:	Library to access EXIF files (extended JPEG files) (32-bit)
+Group:		System/Libraries
+
+%description -n %{lib32name}
+Most digital cameras produce EXIF files, which are JPEG files with
+extra tags that contain information about the image. The EXIF library
+allows you to parse an EXIF file and read the data from those tags.
+
+%package -n %{dev32name}
+Summary:	Headers and links to compile against the "%{libname}" library (32-bit)
+Group:		Development/C
+Requires:	%{devname} = %{version}-%{release}
+Requires:	%{lib32name} = %{version}-%{release}
+
+%description -n %{dev32name}
+This package contains all files which one needs to compile programs using
+the "%{lib32name}" library.
+%endif
+
 %prep
 %setup -q
 %patch0 -p2 -b .includedir
 autoreconf -fi -Iauto-m4 -Im4m
 
-%build
+export CONFIGURE_TOP="$(pwd)"
+
+%if %{with compat32}
+mkdir build32
+cd build32
+%configure32
+cd ..
+%endif
+
+mkdir build
+cd build
 %configure --disable-static
-%make_build
+
+%build
+%if %{with compat32}
+%make_build -C build32
+%endif
+%make_build -C build
 
 %install
-%make_install
+%if %{with compat32}
+%make_install -C build32
+%endif
+%make_install -C build
 
 %find_lang %{langname}
 
@@ -74,3 +124,12 @@ autoreconf -fi -Iauto-m4 -Im4m
 %{_libdir}/pkgconfig/*
 %{_includedir}/*
 %{_docdir}/libexif
+
+%if %{with compat32}
+%files -n %{lib32name}
+%{_prefix}/lib/libexif.so.%{major}*
+
+%files -n %{dev32name}
+%{_prefix}/lib/*.so
+%{_prefix}/lib/pkgconfig/*
+%endif
