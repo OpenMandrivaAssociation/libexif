@@ -9,16 +9,15 @@
 %define lib32name %mklib32name exif %{major}
 %define dev32name %mklib32name exif -d
 %define langname libexif-%{major}
-%define oversion  0_6_22
 
 Summary:	Library to access EXIF files (extended JPEG files)
 Name:		libexif
-Version:	0.6.22
-Release:	2
+Version:	0.6.23
+Release:	1
 License:	LGPLv2+
 Group:		Graphics
 Url:		http://sourceforge.net/projects/libexif/
-Source0:	https://github.com/libexif/libexif/releases/download/%{name}-%{oversion}-release/%{name}-%{version}.tar.xz
+Source0:	https://github.com/libexif/libexif/releases/download/v%{version}/libexif-%{version}.tar.xz
 Patch0:		libexif-0.6.13-pkgconfig-fix.patch
 BuildRequires:	doxygen
 BuildRequires:	libtool
