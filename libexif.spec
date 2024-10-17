@@ -16,7 +16,7 @@ Version:	0.6.24
 Release:	2
 License:	LGPLv2+
 Group:		Graphics
-Url:		http://sourceforge.net/projects/libexif/
+Url:		https://sourceforge.net/projects/libexif/
 Source0:	https://github.com/libexif/libexif/releases/download/v%{version}/libexif-%{version}.tar.bz2
 Patch0:		libexif-0.6.13-pkgconfig-fix.patch
 BuildRequires:	doxygen
