@@ -83,7 +83,7 @@ the "%{lib32name}" library.
 
 %prep
 %setup -q
-%patch0 -p 2 -b .includedir
+%patch 0 -p2 -b .includedir
 autoreconf -fi -Iauto-m4 -Im4m
 
 export CONFIGURE_TOP="$(pwd)"
