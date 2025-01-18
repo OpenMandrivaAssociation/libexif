@@ -24,7 +24,7 @@ BuildRequires:	libtool
 BuildRequires:	gettext-devel
 %if %{with compat32}
 BuildRequires:	devel(libltdl)
-BuildRequires:	devel(libintl)
+BuildRequires:	devel(libasprintf)
 %endif
 
 %description
