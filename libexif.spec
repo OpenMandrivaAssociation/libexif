@@ -12,8 +12,8 @@
 
 Summary:	Library to access EXIF files (extended JPEG files)
 Name:		libexif
-Version:	0.6.24
-Release:	2
+Version:	0.6.25
+Release:	1
 License:	LGPLv2+
 Group:		Graphics
 Url:		https://sourceforge.net/projects/libexif/
