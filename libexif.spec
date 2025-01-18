@@ -12,8 +12,8 @@
 
 Summary:	Library to access EXIF files (extended JPEG files)
 Name:		libexif
-Version:	0.6.24
-Release:	2
+Version:	0.6.25
+Release:	1
 License:	LGPLv2+
 Group:		Graphics
 Url:		https://sourceforge.net/projects/libexif/
@@ -24,7 +24,7 @@ BuildRequires:	libtool
 BuildRequires:	gettext-devel
 %if %{with compat32}
 BuildRequires:	devel(libltdl)
-BuildRequires:	devel(libintl)
+BuildRequires:	devel(libasprintf)
 %endif
 
 %description
@@ -83,7 +83,7 @@ the "%{lib32name}" library.
 
 %prep
 %setup -q
-%patch0 -p2 -b .includedir
+%patch 0 -p2 -b .includedir
 autoreconf -fi -Iauto-m4 -Im4m
 
 export CONFIGURE_TOP="$(pwd)"
