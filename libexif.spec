@@ -19,6 +19,11 @@ Group:		Graphics
 Url:		https://sourceforge.net/projects/libexif/
 Source0:	https://github.com/libexif/libexif/releases/download/v%{version}/libexif-%{version}.tar.bz2
 Patch0:		libexif-0.6.13-pkgconfig-fix.patch
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	doxygen
 BuildRequires:	libtool
 BuildRequires:	gettext-devel
